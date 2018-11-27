@@ -27,3 +27,4 @@ def oracle(stack, buffer, heads, labels):
 		trans = SH
 
 	return trans
+#hello
