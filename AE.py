@@ -3,7 +3,7 @@ from utils import *
 import numpy as np
 def arc_eager(conf, s, inference=False):
     conf.stack.append(conf.buffer.pop(0))
-    conf.stack.append(conf.buffer.pop(0))  # initial shifts
+    #conf.stack.append(conf.buffer.pop(0))  # initial shifts
     X=[]
     Y=[]
 
