@@ -2,15 +2,15 @@ def extract_features(conf): #donne un onze-uet : on prend les features f3 + S.-1
 
     l= []
     l.append(conf.stack[-1].getFeat('POS')) #0 S.0.POS
-    l.append(conf.stack[-1].getFeat('LEMMA')) #1 S.0.LEMMA
-    l.append(conf.stack[-1].getFeat('MORPHO')) #2 S.0.MORPHO
-    l.append(conf.stack[-2].getFeat('POS')) #3 S.1.POS
+  #  l.append(conf.stack[-1].getFeat('LEMMA')) #1 S.0.LEMMA
+   # l.append(conf.stack[-1].getFeat('MORPHO')) #2 S.0.MORPHO
+#    l.append(conf.stack[-2].getFeat('POS')) #3 S.1.POS
     l.append(conf.buffer[0].getFeat('POS'))#4 B.0.POS
-    l.append(conf.buffer[0].getFeat('LEMMA')) #5 B.0.LEMMA
-    l.append(conf.buffer[0].getFeat('MORPHO')) #6 B.0.MORPHO
-    l.append(conf.buffer[1].getFeat('POS')) #7 B.-1.POS
-    l.append(conf.buffer[1].getFeat('POS')) #8 B.1.POS
-    l.append(conf.buffer[0].getFeat('INDEX') - conf.stack[-1].getFeat('INDEX')) #9 DIST
+    #l.append(conf.buffer[0].getFeat('LEMMA')) #5 B.0.LEMMA
+    #l.append(conf.buffer[0].getFeat('MORPHO')) #6 B.0.MORPHO
+    #l.append(conf.buffer[1].getFeat('POS')) #7 B.-1.POS
+    #l.append(conf.buffer[1].getFeat('POS')) #8 B.1.POS
+#    l.append(int(conf.buffer[0].getFeat('INDEX')) - int(conf.stack[-1].getFeat('INDEX'))) #9 DIST
 
     l.append(conf.stack[-1].getFeat('POS')) #10 S.-1.POS
 
