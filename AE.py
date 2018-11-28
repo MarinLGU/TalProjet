@@ -11,7 +11,7 @@ def arc_eager(conf, original_sentence, inference=False):
         while len(conf.buffer) != 0 and len(conf.stack) != 0:
             #print(len(conf.buffer), len(conf.stack) )
 
-            x = extract_features(conf)
+            x = extract_features(conf, original_sentence)
             X.append(x)
 
             beta, sig = conf.buffer[0], conf.stack[-1]
