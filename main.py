@@ -12,7 +12,7 @@ filename='UD_French-GSD/fr_gsd-ud-dev.conllu'
 wb = WordBuffer(mcd)
 wb.readFromConlluFile('UD_French-GSD/fr_gsd-ud-train.conllu')
 
-cf=Configuration(wb)
+#cf=Configuration(wb)
 
 Xf = [] #de dimensions nb_config_extraites * 11
 Yf = [] #de dimensions (2|L|+2) * 2
@@ -28,4 +28,6 @@ while wb.getCurrentIndex()<wb.getLength():
     Xf.extend(X), Yf.extend(Y)
 
 
-
+with open('transi.txt', 'w') as f:
+    for item in Yf[:1000]:
+        f.write("%s\n" %str(item))

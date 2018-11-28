@@ -15,7 +15,7 @@ def arc_eager(conf, original_sentence, inference=False):
             X.append(x)
 
             beta, sig = conf.buffer[0], conf.stack[-1]
-            print(cond_reduce(sig, original_sentence, conf))
+            #print(cond_reduce(sig, original_sentence, conf))
 
             if sig.getFeat('GOV') == beta.getFeat('INDEX'):
                 transi = 'LA'
@@ -32,6 +32,7 @@ def arc_eager(conf, original_sentence, inference=False):
                 transi = 'SH'
                 y = ('', transi)
             Y.append(y)
+            print(transi)
             #print(transi)
             transition(beta, sig, conf, transi)
     else:
