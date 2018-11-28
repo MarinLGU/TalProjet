@@ -6,8 +6,8 @@ from AE import *
 
 mcd =(('INDEX', 'INT'), ('FORM', 'INT'), ('LEMMA', 'INT'), ('POS', 'SYM'), ('X1', 'INT'), ('MORPHO', 'INT'), ('GOV', 'SYM'), ('LABEL', 'SYM'), ('X2', 'SYM'), ('X3', 'SYM'))
 filename='UD_French-GSD/fr_gsd-ud-dev.conllu'
-dc=Dicos(mcd=mcd, verbose=False)
-dc.populateFromConlluFile(filename, verbose=False)
+#dc=Dicos(mcd=mcd, verbose=False)
+#dc.populateFromConlluFile(filename, verbose=False)
 
 wb = WordBuffer(mcd)
 wb.readFromConlluFile('UD_French-GSD/fr_gsd-ud-train.conllu')
@@ -23,8 +23,8 @@ Yf = [] #de dimensions (2|L|+2) * 2
 
 while wb.getCurrentIndex()<wb.getLength():
     conf=Configuration(wb)
-    s=conf.buffer
-    X,Y=arc_eager(conf,s)
+    original_sentence=conf.buffer
+    X,Y=arc_eager(conf,original_sentence)
     Xf.extend(X), Yf.extend(Y)
 
 

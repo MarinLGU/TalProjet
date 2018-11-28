@@ -24,7 +24,7 @@ class Word:
         w =Word()
         for elt in mcd:
             feat, status = elt
-            w.setFeat(feat, 'ROOT')
+            w.setFeat(feat, 'root')
         return w
 
     @staticmethod

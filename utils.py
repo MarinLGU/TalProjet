@@ -2,9 +2,9 @@ def extract_features(conf): #donne un onze-uet : on prend les features f3 + S.-1
 
     l= []
     l.append(conf.stack[-1].getFeat('POS')) #0 S.0.POS
-  #  l.append(conf.stack[-1].getFeat('LEMMA')) #1 S.0.LEMMA
-   # l.append(conf.stack[-1].getFeat('MORPHO')) #2 S.0.MORPHO
-#    l.append(conf.stack[-2].getFeat('POS')) #3 S.1.POS
+    l.append(conf.stack[-1].getFeat('LEMMA')) #1 S.0.LEMMA
+    l.append(conf.stack[-1].getFeat('MORPHO')) #2 S.0.MORPHO
+    #l.append(conf.stack[-2].getFeat('POS')) #3 S.1.POS
     l.append(conf.buffer[0].getFeat('POS'))#4 B.0.POS
     #l.append(conf.buffer[0].getFeat('LEMMA')) #5 B.0.LEMMA
     #l.append(conf.buffer[0].getFeat('MORPHO')) #6 B.0.MORPHO
@@ -14,7 +14,7 @@ def extract_features(conf): #donne un onze-uet : on prend les features f3 + S.-1
 
     l.append(conf.stack[-1].getFeat('POS')) #10 S.-1.POS
 
-    return(l)
+    return l
 
 def select_trainfeatures(X, num):
     if num == 1:
@@ -26,13 +26,14 @@ def select_trainfeatures(X, num):
     return(X_train)
 
 
-def cond_reduce(sig,s, conf): #true si toutes les dépendances de sig ont été faites
+def cond_reduce(sig,s,conf): #true si toutes les dépendances de sig ont été faites
     res= True
     index = sig.getFeat('INDEX')
     for word in s:
         if word.getFeat('GOV') == index : #word est alors un dépendant de sig
             if (sig, word.getFeat('LABEL'), word) in conf.dependencies:
                 pass
+                print('pass')
             else :
                 res= False
     return res
