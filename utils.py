@@ -59,3 +59,9 @@ def cond_reduce(sig,s,conf): #true si toutes les dépendances de sig ont été f
     return res
 
             #je regarde si conf.dependencies contient la dep (sig, word.getFeat('LABEL'), word)
+
+def untuple(tupTransi):
+    return tupTransi[0]+tupTransi[1]
+def retuple(strTransi):
+    return (strTransi[-2], strTransi[-2:])
+

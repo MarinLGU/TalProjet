@@ -1,5 +1,6 @@
 from Transitions import *
 from utils import *
+from main_classifier import clf
 import numpy as np
 def arc_eager(conf, original_sentence, inference=False):
     conf.stack.append(conf.buffer.pop(0))
