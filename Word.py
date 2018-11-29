@@ -23,8 +23,11 @@ class Word:
     def fakeWord(mcd):
         w =Word()
         for elt in mcd:
-            feat, status = elt
-            w.setFeat(feat, 'ROOT')
+            if elt==('INDEX', 'INT'):
+                w.setFeat('INDEX', '0')
+            else:
+                feat, status = elt
+                w.setFeat(feat, 'ROOT')
         return w
 
     @staticmethod

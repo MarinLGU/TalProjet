@@ -5,11 +5,3 @@ class Configuration():
         self.stack=[]
         self.dependencies=[]
 
-
-
-
-
-
-
-
-

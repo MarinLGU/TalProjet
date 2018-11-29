@@ -1,7 +1,7 @@
 from Transitions import *
 from utils import *
 import numpy as np
-def arc_eager(conf, s, inference=False):
+def arc_eager(conf, original_sentence, inference=False):
     conf.stack.append(conf.buffer.pop(0))
     #conf.stack.append(conf.buffer.pop(0))  # initial shifts
     X=[]
@@ -9,26 +9,30 @@ def arc_eager(conf, s, inference=False):
 
     if inference == False:
         while len(conf.buffer) != 0 and len(conf.stack) != 0:
-            x = extract_features(conf)
+            #print(len(conf.buffer), len(conf.stack) )
+
+            x = extract_features(conf, original_sentence)
             X.append(x)
 
             beta, sig = conf.buffer[0], conf.stack[-1]
+            #print(cond_reduce(sig, original_sentence, conf))
 
             if sig.getFeat('GOV') == beta.getFeat('INDEX'):
                 transi = 'LA'
                 y = (sig.getFeat('LABEL'), transi)
 
-            if beta.getFeat('GOV') == sig.getFeat('INDEX'):
+            elif beta.getFeat('GOV') == sig.getFeat('INDEX'):
                 transi = 'RA'
                 y = (beta.getFeat('LABEL'), transi)
 
-            if cond_reduce(sig,s,conf):
+            elif cond_reduce(sig,original_sentence,conf):
                 transi = 'RE'
                 y = ('', transi)
             else:
                 transi = 'SH'
                 y = ('', transi)
             Y.append(y)
+            print(transi)
             transition(beta, sig, conf, transi)
     else:
 
