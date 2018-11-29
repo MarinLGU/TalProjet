@@ -29,6 +29,16 @@ class Word:
                 feat, status = elt
                 w.setFeat(feat, 'ROOT')
         return w
+    @staticmethod
+    def emptyWord(mcd):
+        w =Word()
+        for elt in mcd:
+            if elt==('INDEX', 'INT'):
+                w.setFeat('INDEX', '-1')
+            else:
+                feat, status = elt
+                w.setFeat(feat, 'EMPTY')
+        return w
 
     @staticmethod
     def invalidGov():

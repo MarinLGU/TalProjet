@@ -5,7 +5,7 @@ from Configuration import Configuration
 from AE import *
 import pickle
 import copy
-inference=True
+inference=False
 save= False
 mcd =(('INDEX', 'INT'), ('FORM', 'INT'), ('LEMMA', 'INT'), ('POS', 'SYM'), ('X1', 'INT'), ('MORPHO', 'INT'), ('GOV', 'SYM'), ('LABEL', 'SYM'), ('X2', 'SYM'), ('X3', 'SYM'))
 filename='UD_French-GSD/fr_gsd-ud-dev.conllu'
@@ -20,6 +20,7 @@ Yf = [] #de dimensions (2|L|+2) * 2
 #s = etat_ini.buffer
 
 while wb.getCurrentIndex()<wb.getLength():
+    print(wb.getCurrentIndex(), wb.getLength())
     conf=Configuration(wb)
     original_sentence=copy.copy(conf.buffer)
     X,Y=arc_eager(conf,original_sentence, inference)

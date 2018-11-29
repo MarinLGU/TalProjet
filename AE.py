@@ -2,6 +2,8 @@ from Transitions import *
 from utils import *
 import pickle
 import numpy as np
+from Word import Word
+mcd =(('INDEX', 'INT'), ('FORM', 'INT'), ('LEMMA', 'INT'), ('POS', 'SYM'), ('X1', 'INT'), ('MORPHO', 'INT'), ('GOV', 'SYM'), ('LABEL', 'SYM'), ('X2', 'SYM'), ('X3', 'SYM'))
 
 with open('skperceptron.txt', 'rb') as f:
     clf=pickle.load(f)
@@ -23,12 +25,13 @@ def arc_eager(conf, original_sentence, inference=False):
     Y=[]
 
     if inference == False:
-        while len(conf.buffer) != 0 and len(conf.stack) != 0:
+        while len(conf.buffer) != 0 or len(conf.stack) != 0:
             #print(len(conf.buffer), len(conf.stack) )
 
             x = extract_features(conf, original_sentence)
             X.append(x)
-
+            if len(conf.buffer) == 0:
+                conf.buffer.append(Word.emptyWord(mcd))
             beta, sig = conf.buffer[0], conf.stack[-1]
             #print(cond_reduce(sig, original_sentence, conf))
 
@@ -51,19 +54,25 @@ def arc_eager(conf, original_sentence, inference=False):
             transition(beta, sig, conf, transi)
     else:
 
-        while len(conf.buffer) != 0 and len(conf.stack) != 0:
-            X=select_trainfeatures(extract_features(conf, original_sentence), 1)
+        while len(conf.buffer) != 0 or len(conf.stack) != 0:
+            print(extract_features(conf, original_sentence))
+            x=select_trainfeatures(extract_features(conf, original_sentence), 1)
+            X.append(x)
             #print(Xenc1.categories_)
             #X=[X[0],X[1], int(X[2])]
             #X=np.array(X).reshape(1,-1)
-            X=[[X[0],X[1], int(X[2])]]
-            print(X)
-            X=Xenc1.transform(X)
-            print(X)
-            classe=clf.predict(X)
+            x=[[x[0],x[1], int(x[2])]]
+            #print(X)
+            x=Xenc1.transform(x)
+            #print(X)
+            classe=clf.predict(x)
             etiq, transi = retuple(labenc.inverse_transform(classe))
             #l'étiquette ici n'importe pas mais le transi pris par transition
             beta, sig = conf.buffer[0], conf.stack[0]
+            Y.append((etiq, transi))
+            print(transi)
 
             transition(beta, sig, conf, transi)
+
+    print(len(conf.buffer),len(conf.stack) )
     return X, Y #X.shape=nbconfig*11 Y.shape=nbconfig*2

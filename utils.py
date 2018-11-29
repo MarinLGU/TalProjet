@@ -6,23 +6,37 @@ def extract_features(conf, original_sentence): #donne un onze-uet : on prend les
     l.append(conf.stack[-1].getFeat('MORPHO')) #2 S.0.MORPHO
 
 
-
-    l.append(conf.buffer[0].getFeat('POS'))#3 B.0.POS
-    l.append(conf.buffer[0].getFeat('LEMMA')) #4 B.0.LEMMA
-    l.append(conf.buffer[0].getFeat('MORPHO')) #5 B.0.MORPHO
-    #print(len(original_sentence))
-    if int(conf.buffer[0].getFeat('INDEX'))>0:
-        l.append(original_sentence[int(conf.buffer[0].getFeat('INDEX'))-1].getFeat('POS')) #6 B.-1.POS
+    if len(conf.buffer)>0:
+        l.append(conf.buffer[0].getFeat('POS'))#3 B.0.POS
+    else:
+        l.append('empty')
+    if len(conf.buffer) > 0:
+        l.append(conf.buffer[0].getFeat('LEMMA')) #4 B.0.LEMMA
+    else:
+        l.append('empty')
+    if len(conf.buffer) > 0:
+        l.append(conf.buffer[0].getFeat('MORPHO')) #5 B.0.MORPHO
+    else:
+        l.append('empty')
+    if len(conf.buffer) > 0:
+        if int(conf.buffer[0].getFeat('INDEX'))>0:
+            l.append(original_sentence[int(conf.buffer[0].getFeat('INDEX'))-1].getFeat('POS')) #6 B.-1.POS
+        else :
+            l.append('empty')
     else :
         l.append('empty')
-    #print(int(conf.buffer[0].getFeat('INDEX')))
-    if int(conf.buffer[0].getFeat('INDEX'))<(len(original_sentence)-1):
-        l.append(original_sentence[int(conf.buffer[0].getFeat('INDEX')) + 1].getFeat('POS')) #7 B.1.POS
-    else :
+    if len(conf.buffer) > 0:
+        if int(conf.buffer[0].getFeat('INDEX'))<(len(original_sentence)-1):
+            l.append(original_sentence[int(conf.buffer[0].getFeat('INDEX')) + 1].getFeat('POS')) #7 B.1.POS
+        else :
+            l.append('empty')
+    else:
         l.append('empty')
 
-
-    l.append(int(conf.buffer[0].getFeat('INDEX')) - int(conf.stack[-1].getFeat('INDEX'))) #8 DIST
+    if len(conf.buffer) > 0:
+        l.append(int(conf.buffer[0].getFeat('INDEX')) - int(conf.stack[-1].getFeat('INDEX'))) #8 DIST
+    else:
+        l.append(0)
 
     if len(conf.stack)>1:
         l.append(conf.stack[-2].getFeat('POS')) #9 S.1.POS
