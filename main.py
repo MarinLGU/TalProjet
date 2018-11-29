@@ -27,7 +27,7 @@ Xf1=[]
 Xf2=[]
 Xf3=[]
 for features in Xf:
-    print(len(features))
+    #print(len(features))
     Xf1.append(select_trainfeatures(features, 1))
     Xf2.append(select_trainfeatures(features, 2))
     Xf3.append(select_trainfeatures(features,3))
@@ -38,16 +38,20 @@ for features in Xf:
 with open('y_train.txt', 'w') as f:
     for item in Yf:
         f.write("%s\n" %str(item))
+    f.close()
 with open('X_train1.txt', 'w') as f:
     for item in Xf1:
         f.write("%s\n" %str(item))
+    f.close()
 
 with open('X_train2.txt', 'w') as f:
     for item in Xf2:
         f.write("%s\n" %str(item))
+    f.close()
 
 with open('X_train3.txt', 'w') as f:
     for item in Xf3:
         f.write("%s\n" %str(item))
+    f.close()
 
 
