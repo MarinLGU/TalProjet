@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="mleguillou@localhost:6000">
+    <serverData>
+      <paths name="mleguillou@localhost:6000">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/users/promo2019/mleguillou/Documents/Centrale_3A/Master/TAL/Projet/TalProjet" local="$PROJECT_DIR$" web="/users/promo2019/mleguillou/Documents/Centrale_3A/Master/TAL/Projet/TalProjet" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
