@@ -28,10 +28,10 @@ def arc_eager(conf, original_sentence, inference=False):
         i=0
         while len(conf.buffer) != 0 or len(conf.stack) != 0:
             i+=1
-            for dep in conf.dependencies:
-                w1, tp, w2 = dep
-                print(w1.getFeat('FORM'), tp, w2.getFeat('FORM'))
-            print(len(conf.stack), len(conf.buffer) )
+            # for dep in conf.dependencies:
+            #     w1, tp, w2 = dep
+            #     print(w1.getFeat('FORM'), tp, w2.getFeat('FORM'))
+            # print(len(conf.stack), len(conf.buffer) )
 
             x = extract_features(conf, original_sentence)
             X.append(x)
@@ -42,8 +42,7 @@ def arc_eager(conf, original_sentence, inference=False):
             else:
                 beta, sig = conf.buffer[0], conf.stack[-1]
 
-            print('stack-1', sig.getFeat('FORM'), 'buf0', beta.getFeat('FORM'))
-            #print(cond_reduce(sig, original_sentence, conf))
+            #print('stack-1', sig.getFeat('FORM'), 'buf0', beta.getFeat('FORM'))
 
             if sig.getFeat('GOV') == beta.getFeat('INDEX') and singheadcheck(sig, conf) and sig.getFeat('INDEX')!=0:
                 transi = 'LA'
@@ -63,7 +62,6 @@ def arc_eager(conf, original_sentence, inference=False):
             else:
                 continue
             Y.append(y)
-            print(y)
             transition(beta, sig, conf, transi)
     else:
 
@@ -87,5 +85,5 @@ def arc_eager(conf, original_sentence, inference=False):
 
             transition(beta, sig, conf, transi)
 
-    print(len(conf.buffer),len(conf.stack) )
+    #print(len(conf.buffer),len(conf.stack) )
     return X, Y #X.shape=nbconfig*11 Y.shape=nbconfig*2

@@ -72,9 +72,7 @@ def cond_reduce(sig,s,conf): #true si toutes les dépendances de sig ont été f
             if (sig, word.getFeat('LABEL'), word)  in conf.dependencies:
                 pass
             else :
-                print(word.getFeat('FORM'))
                 res= False
-    print(res)
     return res
 
 #je regarde si conf.dependencies contient la dep (sig, word.getFeat('LABEL'), word)
@@ -96,11 +94,23 @@ def retuple(strTransi):
 
 def non_projective(sentence):
     for word1 in sentence:
-        dep1=int(word1.getFeat('GOV'))
-        head1 = int(word1.getFeat('INDEX'))
+        if word1.getFeat('GOV')=='ROOT':
+            dep1=0
+        else:
+            dep1=int(word1.getFeat('GOV'))
+        if word1.getFeat('GOV') == 'ROOT':
+            head1=0
+        else:
+            head1 = int(word1.getFeat('INDEX'))
         for word2 in sentence:
-            dep2 = int(word2.getFeat('GOV'))
-            head2 = int(word1.getFeat('INDEX'))
+            if word2.getFeat('GOV') == 'ROOT':
+                dep2 = 0
+            else:
+                dep2 = int(word2.getFeat('GOV'))
+            if word2.getFeat('GOV') == 'ROOT':
+                head2 = 0
+            else:
+                head2 = int(word2.getFeat('INDEX'))
             if head1 < 0 or head2 < 0:
                 continue
             if (dep1 > head2 and dep1 < dep2 and head1 < head2) or (dep1 < head2 and dep1 > dep2 and head1 < dep2):

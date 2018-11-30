@@ -6,7 +6,7 @@ from AE import *
 import pickle
 import copy
 inference=False
-save= False
+save= True
 mcd =(('INDEX', 'INT'), ('FORM', 'INT'), ('LEMMA', 'INT'), ('POS', 'SYM'), ('X1', 'INT'), ('MORPHO', 'INT'), ('GOV', 'SYM'), ('LABEL', 'SYM'), ('X2', 'SYM'), ('X3', 'SYM'))
 filename='UD_French-GSD/fr_gsd-ud-dev.conllu'
 
@@ -18,11 +18,11 @@ Yf = [] #de dimensions (2|L|+2) * 2
 
 #etat_ini = next_sentence
 #s = etat_ini.buffer
-i=0
-#while wb.getCurrentIndex()<wb.getLength():
-while i<20:
+i=1
+while wb.getCurrentIndex()<wb.getLength():
+#while i<20:
     i+=1
-    print(wb.getCurrentIndex(), wb.getLength())
+    #print(wb.getCurrentIndex(), wb.getLength())
     conf=Configuration(wb)
     original_sentence=copy.copy(conf.buffer)
     if non_projective(original_sentence):
