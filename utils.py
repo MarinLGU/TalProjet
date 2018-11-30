@@ -59,24 +59,56 @@ def select_trainfeatures(X, num):
         print('invalid features map')
     return(X_train)
 
-
 def cond_reduce(sig,s,conf): #true si toutes les dépendances de sig ont été faites
     res= True
     index = sig.getFeat('INDEX')
     for word in s:
-        if word.getFeat('GOV') == index : #word est alors un dépendant de sig
-            if (sig, word.getFeat('LABEL'), word) in conf.dependencies:
+        if sig.getFeat('GOV')==word.getFeat('INDEX'):
+            if (word, sig.getFeat('LABEL'), sig) in conf.dependencies:
                 pass
-                print('pass')
+            else:
+                res=False
+        if word.getFeat('GOV') == index : #word est alors un dépendant de sig
+            if (sig, word.getFeat('LABEL'), word)  in conf.dependencies:
+                pass
             else :
+                print(word.getFeat('FORM'))
                 res= False
+    print(res)
     return res
 
-            #je regarde si conf.dependencies contient la dep (sig, word.getFeat('LABEL'), word)
+#je regarde si conf.dependencies contient la dep (sig, word.getFeat('LABEL'), word)
+def singheadcheck(sig,conf): #vérifie que sig n'a pas de gouverneur
+    res = True
+    for (w1,r,w2) in conf.dependencies:
+        if w2==sig:
+            res=False
+        else:
+            pass
+    return res
+
 
 def untuple(tupTransi):
     return tupTransi[0]+tupTransi[1]
 
 def retuple(strTransi):
     return (strTransi[0][:-2], strTransi[0][-2:])
+
+def non_projective(sentence):
+    for word1 in sentence:
+        dep1=int(word1.getFeat('GOV'))
+        head1 = int(word1.getFeat('INDEX'))
+        for word2 in sentence:
+            dep2 = int(word2.getFeat('GOV'))
+            head2 = int(word1.getFeat('INDEX'))
+            if head1 < 0 or head2 < 0:
+                continue
+            if (dep1 > head2 and dep1 < dep2 and head1 < head2) or (dep1 < head2 and dep1 > dep2 and head1 < dep2):
+                return True
+
+            if dep1 < head1 and head1 is not head2:
+                if (head1 > head2 and head1 < dep2 and dep1 < head2) or (
+                        head1 < head2 and head1 > dep2 and dep1 < dep2):
+                    return True
+    return False
 

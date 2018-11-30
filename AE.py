@@ -25,32 +25,45 @@ def arc_eager(conf, original_sentence, inference=False):
     Y=[]
 
     if inference == False:
+        i=0
         while len(conf.buffer) != 0 or len(conf.stack) != 0:
-            #print(len(conf.buffer), len(conf.stack) )
+            i+=1
+            for dep in conf.dependencies:
+                w1, tp, w2 = dep
+                print(w1.getFeat('FORM'), tp, w2.getFeat('FORM'))
+            print(len(conf.stack), len(conf.buffer) )
 
             x = extract_features(conf, original_sentence)
             X.append(x)
             if len(conf.buffer) == 0:
-                conf.buffer.append(Word.emptyWord(mcd))
-            beta, sig = conf.buffer[0], conf.stack[-1]
+                #conf.buffer.append(Word.emptyWord(mcd))
+                beta=Word.emptyWord(mcd)
+                sig=conf.stack[-1]
+            else:
+                beta, sig = conf.buffer[0], conf.stack[-1]
+
+            print('stack-1', sig.getFeat('FORM'), 'buf0', beta.getFeat('FORM'))
             #print(cond_reduce(sig, original_sentence, conf))
 
-            if sig.getFeat('GOV') == beta.getFeat('INDEX'):
+            if sig.getFeat('GOV') == beta.getFeat('INDEX') and singheadcheck(sig, conf) and sig.getFeat('INDEX')!=0:
                 transi = 'LA'
                 y = (sig.getFeat('LABEL'), transi)
 
-            elif beta.getFeat('GOV') == sig.getFeat('INDEX'):
+            elif beta.getFeat('GOV') == sig.getFeat('INDEX') :
                 transi = 'RA'
                 y = (beta.getFeat('LABEL'), transi)
 
             elif cond_reduce(sig,original_sentence,conf):
                 transi = 'RE'
                 y = ('', transi)
-            else:
+
+            elif len(conf.buffer) >0:
                 transi = 'SH'
                 y = ('', transi)
+            else:
+                continue
             Y.append(y)
-            print(transi)
+            print(y)
             transition(beta, sig, conf, transi)
     else:
 

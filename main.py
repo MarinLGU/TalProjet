@@ -1,5 +1,5 @@
 print("Hello World")
-from utils import select_trainfeatures
+from utils import non_projective
 from WordBuffer import WordBuffer
 from Configuration import Configuration
 from AE import *
@@ -18,13 +18,19 @@ Yf = [] #de dimensions (2|L|+2) * 2
 
 #etat_ini = next_sentence
 #s = etat_ini.buffer
-
-while wb.getCurrentIndex()<wb.getLength():
+i=0
+#while wb.getCurrentIndex()<wb.getLength():
+while i<20:
+    i+=1
     print(wb.getCurrentIndex(), wb.getLength())
     conf=Configuration(wb)
     original_sentence=copy.copy(conf.buffer)
-    X,Y=arc_eager(conf,original_sentence, inference)
-    Xf.extend(X), Yf.extend(Y)
+    if non_projective(original_sentence):
+        print('non projective', i)
+        continue
+    else:
+        X,Y=arc_eager(conf,original_sentence, inference)
+        Xf.extend(X), Yf.extend(Y)
 
 Xf1=[]
 Xf2=[]
