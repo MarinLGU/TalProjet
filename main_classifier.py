@@ -34,7 +34,7 @@ Xenc1=OneHotEncoder(sparse=False, handle_unknown='ignore')
 Xenc1.fit(X_train1)
 X_train1Enc=Xenc1.transform(X_train1)
 
-clf = linear_model.Perceptron(max_iter=5, n_jobs=-1)
+clf = linear_model.Perceptron(max_iter=50, n_jobs=-1)
 clf.fit(X_train1Enc, y_train)
 print(clf.score(X_train1Enc, y_train))
 

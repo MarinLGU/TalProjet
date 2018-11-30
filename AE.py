@@ -66,22 +66,25 @@ def arc_eager(conf, original_sentence, inference=False):
     else:
 
         while len(conf.buffer) != 0 or len(conf.stack) != 0:
-            print(extract_features(conf, original_sentence))
+            #print(extract_features(conf, original_sentence))
             x=select_trainfeatures(extract_features(conf, original_sentence), 1)
+            #x=extract_features(conf, original_sentence)
             X.append(x)
-            #print(Xenc1.categories_)
-            #X=[X[0],X[1], int(X[2])]
-            #X=np.array(X).reshape(1,-1)
             x=[[x[0],x[1], int(x[2])]]
-            #print(X)
+            #x=[[x[0], x[3], int(x[8])]]
             x=Xenc1.transform(x)
             #print(X)
             classe=clf.predict(x)
             etiq, transi = retuple(labenc.inverse_transform(classe))
             #l'étiquette ici n'importe pas mais le transi pris par transition
-            beta, sig = conf.buffer[0], conf.stack[0]
+            if len(conf.buffer) == 0:
+                #conf.buffer.append(Word.emptyWord(mcd))
+                beta=Word.emptyWord(mcd)
+                sig=conf.stack[-1]
+            else:
+                beta, sig = conf.buffer[0], conf.stack[-1]
             Y.append((etiq, transi))
-            print(transi)
+            #print(transi)
 
             transition(beta, sig, conf, transi)
 

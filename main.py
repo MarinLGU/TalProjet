@@ -5,8 +5,8 @@ from Configuration import Configuration
 from AE import *
 import pickle
 import copy
-inference=False
-save= True
+inference=True
+save= False
 mcd =(('INDEX', 'INT'), ('FORM', 'INT'), ('LEMMA', 'INT'), ('POS', 'SYM'), ('X1', 'INT'), ('MORPHO', 'INT'), ('GOV', 'SYM'), ('LABEL', 'SYM'), ('X2', 'SYM'), ('X3', 'SYM'))
 filename='UD_French-GSD/fr_gsd-ud-dev.conllu'
 
@@ -19,8 +19,8 @@ Yf = [] #de dimensions (2|L|+2) * 2
 #etat_ini = next_sentence
 #s = etat_ini.buffer
 i=1
-while wb.getCurrentIndex()<wb.getLength():
-#while i<20:
+#while wb.getCurrentIndex()<wb.getLength():
+while i<3000:
     i+=1
     #print(wb.getCurrentIndex(), wb.getLength())
     conf=Configuration(wb)
@@ -32,17 +32,18 @@ while wb.getCurrentIndex()<wb.getLength():
         X,Y=arc_eager(conf,original_sentence, inference)
         Xf.extend(X), Yf.extend(Y)
 
-Xf1=[]
-Xf2=[]
-Xf3=[]
-for features in Xf:
-    #print(len(features))
-    Xf1.append(select_trainfeatures(features, 1))
-    Xf2.append(select_trainfeatures(features, 2))
-    Xf3.append(select_trainfeatures(features,3))
+if not inference:
+    Xf1=[]
+    Xf2=[]
+    Xf3=[]
+    for features in Xf:
+        #print(len(features))
+        Xf1.append(select_trainfeatures(features, 1))
+        Xf2.append(select_trainfeatures(features, 2))
+        Xf3.append(select_trainfeatures(features,3))
 
 
-if save:
+if save and not inference:
 
     with open('y_train.txt', 'wb') as f:
         #for item in Yf:
