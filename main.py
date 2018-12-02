@@ -9,16 +9,25 @@ import copy
 train=False
 inference=False
 save= True
-featset =2
+featset =3
 langue='English'
 mcd =(('INDEX', 'INT'), ('FORM', 'INT'), ('LEMMA', 'INT'), ('POS', 'SYM'), ('X1', 'INT'), ('MORPHO', 'INT'), ('GOV', 'SYM'), ('LABEL', 'SYM'), ('X2', 'SYM'), ('X3', 'SYM'))
-#filename='UD_French-GSD/fr_gsd-ud-dev.conllu'
+if langue=='Dutch':
+    filenameTrain='UD_Dutch-LassySmall/nl_lassysmall-ud-train.conllu'
+    filenameTest='UD_Dutch-LassySmall/nl_lassysmall-ud-test.conllu'
+if langue=='French':
+    filenameTrain='UD_French-GSD/fr_gsd-ud-train.conllu'
+    filenameTest = 'UD_French-GSD/fr_gsd-ud-test.conllu'
+
+if langue=='English':
+    filenameTrain='UD_English-LinES/en_lines-ud-train.conllu'
+    filenameTest='UD_English-LinES/en_lines-ud-test.conllu'
 
 wb = WordBuffer(mcd)
 if train:
-    wb.readFromConlluFile('UD_English-LinES/en_lines-ud-train.conllu')
+    wb.readFromConlluFile(filenameTrain)
 else:
-    wb.readFromConlluFile('UD_English-LinES/en_lines-ud-test.conllu')
+    wb.readFromConlluFile(filenameTest)
 Xf = [] #de dimensions nb_config_extraites * 11
 Yf = [] #de dimensions (2|L|+2) * 2
 Zf = []
