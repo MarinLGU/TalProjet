@@ -49,7 +49,7 @@ if save:
         pickle.dump(X_train1Enc, f)
         f.close()
     with open('X_test1Enc.txt', 'wb') as f:
-        pickle.dump(X_train1Enc, f)
+        pickle.dump(X_test1Enc, f)
         f.close()
     with open('y_train1Enc.txt', 'wb') as f:
         pickle.dump(y_trainEnc, f)
