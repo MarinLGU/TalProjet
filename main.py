@@ -6,19 +6,19 @@ from AE import *
 import pickle
 import copy
 
-train=True
+train=False
 inference=False
 save= True
-featset =1
-langue='Dutch'
+featset =2
+langue='English'
 mcd =(('INDEX', 'INT'), ('FORM', 'INT'), ('LEMMA', 'INT'), ('POS', 'SYM'), ('X1', 'INT'), ('MORPHO', 'INT'), ('GOV', 'SYM'), ('LABEL', 'SYM'), ('X2', 'SYM'), ('X3', 'SYM'))
 #filename='UD_French-GSD/fr_gsd-ud-dev.conllu'
 
 wb = WordBuffer(mcd)
 if train:
-    wb.readFromConlluFile('UD_Dutch-LassySmall/nl_lassysmall-ud-train.conllu')
+    wb.readFromConlluFile('UD_English-LinES/en_lines-ud-train.conllu')
 else:
-    wb.readFromConlluFile('UD_Dutch-LassySmall/nl_lassysmall-ud-test.conllu')
+    wb.readFromConlluFile('UD_English-LinES/en_lines-ud-test.conllu')
 Xf = [] #de dimensions nb_config_extraites * 11
 Yf = [] #de dimensions (2|L|+2) * 2
 Zf = []
@@ -55,10 +55,11 @@ if not inference:
 
 
 print('nombre de phrases non projectives : ', np)
+print('nombre de phrases total : ', i)
 if save and train and not inference:
 
 
-    with open('y_trainDutch.txt', 'wb') as f:
+    with open('y_train%s.txt'%langue, 'wb') as f:
         pickle.dump(Yf, f)
         f.close()
     if featset == 1:
