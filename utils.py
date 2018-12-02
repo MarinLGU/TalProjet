@@ -122,3 +122,42 @@ def non_projective(sentence):
                     return True
     return False
 
+def write_conllu(sentences, filename_in, filename_out):
+#     features = ['INDEX', 'FORM', 'LEMMA', 'POS', 'X1', 'MORPHO', 'GOV', 'LABEL', 'X2', 'X3']
+    with open(filename_in, 'r', encoding='utf-8') as fin, open(filename_out, 'w', encoding='utf-8') as fout:
+        sentence_i = 0
+        sentence_begin = True
+        for line in fin:
+            if line[0] == '\n':
+                fout.write(line)
+                if not sentence_begin:
+                    sentence_i += 1
+                    sentence_begin = True
+            elif line[0] != '#':
+                sentence_begin = False
+                tokens = line.split('\t')
+                if '-' in tokens[0]:
+                    fout.write(line)
+                    continue
+                if int(tokens[0]) - 1 >= len(sentences[sentence_i]):
+                    print(line)
+                    print(sentences[sentence_i])
+                    print(sentence_i)
+                    break
+                if sentences[sentence_i][int(tokens[0])].getFeat('GOV') =='nonprojective':
+                    continue
+                tokens[6] = sentences[sentence_i][int(tokens[0])].getFeat('GOV')
+                tokens[7] = sentences[sentence_i][int(tokens[0])].getFeat('LABEL')
+                fout.write('\t'.join(tokens))
+
+def isallowed(conf, sig, transi):
+    if transi=='LA':
+        if not singheadcheck(sig, conf) and sig.getFeat('INDEX')!=0:
+            return False
+    if transi=='SH':
+        if len(conf.buffer)>0:
+            return False
+    else:
+        return True
+
+

@@ -5,7 +5,7 @@
       <paths name="mleguillou@localhost:6000">
         <serverdata>
           <mappings>
-            <mapping deploy="/users/promo2019/mleguillou/Documents/Centrale_3A/Master/TAL/Projet/TalProjet" local="$PROJECT_DIR$" web="/users/promo2019/mleguillou/Documents/Centrale_3A/Master/TAL/Projet/TalProjet" />
+            <mapping deploy="/donnees/mleguillou/TAL/TalProjet" local="$PROJECT_DIR$" web="/donnees/mleguillou/TAL/TalProjet" />
           </mappings>
         </serverdata>
       </paths>
